@@ -1,0 +1,39 @@
+{
+  "name": "feathers-demo-application",
+  "description": "learning Feathers",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "",
+  "main": "app.js",
+  "keywords": [
+    "feathers"
+  ],
+  "license": "VAST",
+  "repository": {},
+  "author": {},
+  "contributors": [],
+  "bugs": {},
+  "engines": {
+    "node": ">= 5.0.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.14.0",
+    "feathers": "^2.0.0",
+    "feathers-authentication": "^0.7.1",
+    "feathers-errors": "^2.0.1",
+    "feathers-hooks": "^1.5.0",
+    "feathers-memory": "^0.7.1",
+    "feathers-mongoose": "^3.4.1",
+    "feathers-rest": "^1.2.4",
+    "feathers-socketio": "^1.4.1",
+    "localstorage-memory": "^1.0.2",
+    "mongoose": "^4.5.2",
+    "passport-auth0": "^0.5.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {}
+}
