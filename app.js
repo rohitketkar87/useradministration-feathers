@@ -9,25 +9,29 @@ var hooks = require('feathers-hooks');
 var memory = require('feathers-memory');
 var bodyParser = require('body-parser');
 var authentication = require('feathers-authentication');
-//var socketio = require('feathers-socketio');
+var socketio = require('feathers-socketio');
 
 //var subapp = express();
 var app = feathers()
   .configure(rest())
+  .configure(socketio())
   .configure(hooks())
-  //.configure(socketio())
   // Needed for parsing bodies (login)
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .use('/users', mongooseService({Model: users}))
   .configure(authentication({
     userEndpoint: '/users',
-    local: {
-      usernameField: 'email',
-      passwordField: 'password'
-    },
-    idField: 'id'
+    idField: '_id',
+    token: {
+      secret: 'vast'
+    }
   }))
+
+module.exports = {
+  app: app,
+  authentication: authentication
+}
 
 var router = feathers.Router();
 router.use(function(req, res, next) {

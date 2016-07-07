@@ -13,6 +13,16 @@ var routes = [
         path:'/api/loginuser',
         httpMethod: 'POST',
         middleware: [mainCtrl.loginUser]
+    },
+    {
+        path:'/api/finduser',
+        httpMethod: 'GET',
+        middleware: [mainCtrl.findUserByEmail]
+    },
+    {
+        path:'/api/user',
+        httpMethod: 'GET',
+        middleware: [mainCtrl.findUserById]
     }
      
 ];

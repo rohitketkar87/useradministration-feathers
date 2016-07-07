@@ -36,5 +36,27 @@ module.exports = {
 			} 
 			res.send(result);
 		})
-	}	// End of loginUser
+	},	// End of loginUser
+
+	findUserByEmail: function(req, res) {
+		console.log('mainCtrl : findUserByEmail starts');
+		var email = req.param('email');
+		userService.findUserByEmail(email, function(result) {
+			if (result.status == '400') {
+				console.log('Error while retrieving user');
+			} 
+			res.send(result);
+		})
+	},	// End of findUserByEmail
+
+	findUserById: function(req, res) {
+		console.log('mainCtrl : findUserById starts');
+		var id = req.param('id');
+		userService.findUserById(id, function(result) {
+			if (result.status == '400') {
+				console.log('Error while retrieving user');
+			} 
+			res.send(result);
+		})
+	}	// End of findUserById
 }
