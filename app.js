@@ -20,17 +20,20 @@ var app = feathers()
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .use('/users', mongooseService({Model: users}))
-  .configure(authentication({
+  /*.configure(authentication({
     userEndpoint: '/users',
     idField: '_id',
     token: {
       secret: 'vast'
     }
-  }))
+  }))*/
+var config = app.get('auth');
+  app.configure(authentication(config))
 
 module.exports = {
   app: app,
-  authentication: authentication
+  authentication: authentication,
+  hooks: hooks
 }
 
 var router = feathers.Router();

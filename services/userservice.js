@@ -10,6 +10,7 @@ var authentication = require('feathers-authentication');
 var authentication_client = require('feathers-authentication/client');*/
 var app = require('../app.js').app;
 var authentication = require('../app.js').authentication;
+var hooks = require('../app.js').hooks;
 /*var socketio = require('feathers-socketio')
 var io = require('socket.io');
 const host = 'http://localhost:3030';
@@ -37,6 +38,22 @@ var socket = io(host);*/
 //app.use('/users', mongooseService({Model: users}));
 var userService = app.service('users');
 
+userService.before({
+	create: authentication.hooks.hashPassword()
+});
+
+userService.after({
+	find: hooks.remove('password'),
+	get: hooks.remove('password')
+});
+
+/*userService.after({
+	get(hook) {
+		console.log('******hook*****'+JSON.stringify(hook, null, 4));
+		hook.result.password = 'Are you kidding me!!';
+	}
+});*/
+
 module.exports = {
 	/**
 	 * [registerUser description]
@@ -52,12 +69,7 @@ module.exports = {
 	 		status : '',
 	 		id : ''
 	 	};
-	 	/*userService.before({
-	 		create: [authentication.hooks.hashPassword(), function(hook) {
-	 			console.log('****hook**** '+JSON.stringify(hook, null, 4));
-	 			hook.data.createdAt = new Date();
-	 		}]
-	 	});*/
+	 	
 	 	userService.create(userInput, function(err, output) {
 	 		if (err) {
 	 			console.log('Error while registering user');
@@ -130,11 +142,7 @@ module.exports = {
 	 		userRecord : []
 	 	};
 
-	 	userService.after({
-	 		find: hooks.remove('password', function(hook) {
-	 			console.log("****hook.params****" +JSON.stringify(hook.params, null, 4));
-	 		})
-	 	});
+	 	
 	 	
 	 	/*Using callback*/
 	 	userService.find({query: {email: email}, provider: "vast"}, function(err, output) {
@@ -170,13 +178,7 @@ module.exports = {
 	 		userRecord : {}
 	 	};
 
-	 	userService.after({
-	 		 /*get: hooks.remove('password')*/
-	 		get(hook) {
-	 			console.log('******hook*****'+JSON.stringify(hook, null, 4));
-	 			hook.result.password = 'Are you kidding me!!';
-	 		}
-	 	});
+	 	
 	 	userService.get(id, function(err, output) {
 	 		if (err) {
 	 			console.log('Error while retrieving user');
